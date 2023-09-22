@@ -51,6 +51,7 @@
 }
 
 .wrapper {
+   
     display: flex;
     align-items: center;
     justify-content: center;
@@ -68,11 +69,25 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10rem;
+    gap: 25rem;
 
     margin-top: 4rem;
     padding-bottom: 1.5rem;
 
     border-radius: 2px;
     border-bottom: 1px solid ;
+}
+
+.taskCount {
+    color: var(--blue);
+}
+
+.taskFinished { 
+    color: var(--purple);
+
+    font-family: Inter;
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
