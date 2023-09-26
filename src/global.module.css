@@ -91,3 +91,26 @@
     font-weight: 700;
     line-height: normal;
 }
+/* -----------------------FORM----------------------- */
+form {
+    display: flex;
+    gap: 1rem;
+ }
+
+.inputClass {
+ 
+    width: 32rem;
+    height: 3rem;
+
+    display: flex;
+    padding: 1rem;
+    align-items: center;
+    flex: 1 0 0 ;
+
+    border-radius: 8px;
+    border: 1px solid var(--gray-700);
+    background-color: var(--gray-500);
+
+    color: var(--gray-300)
+}
+/* ________________________________________________ */
