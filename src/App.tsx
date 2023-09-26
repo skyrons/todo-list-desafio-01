@@ -27,6 +27,13 @@ function App() {
 
     setTaskText(event.target.value)
   }
+
+  function deleteComment(taskToDelete: string) {
+    const tasksWithoutDeleteOne = tasks.filter(tasks => {
+      return tasks !== taskToDelete
+    })
+    setTasks(tasksWithoutDeleteOne)
+  }
   
   return (
     <div className={style.page}>
@@ -64,6 +71,7 @@ function App() {
           <div>
             {tasks.map(task => {
               return  <Task
+                onDeleteTask={deleteComment}
                 key={task}
                 content={task} />
             })}
