@@ -10,7 +10,11 @@ import { ChangeEvent, FormEvent, useState } from "react";
 
 function App() {
 
-  const [tasks, setTasks] = useState([]) 
+  const [tasks, setTasks] = useState<Array<{ 
+    content: string; 
+    isFinished: boolean}>>(
+      []
+      ); 
   const [taskText, setTaskText] = useState('')
   console.log(tasks)
 
@@ -18,7 +22,7 @@ function App() {
   function handleCreateNewTask(event: FormEvent){
     event?.preventDefault()
 
-    setTasks([...tasks, taskText]);
+    setTasks([...tasks, {content: taskText, isFinished: false}]);
     setTaskText('')
   }
 
@@ -29,11 +33,36 @@ function App() {
   }
 
   function deleteComment(taskToDelete: string) {
-    const tasksWithoutDeleteOne = tasks.filter(tasks => {
-      return tasks !== taskToDelete
+    const tasksWithoutDeleteOne = tasks.filter(task => {
+      return task.content !== taskToDelete
     })
     setTasks(tasksWithoutDeleteOne)
   }
+
+  function countCompletedTasks() {
+    return tasks.filter((task) => task.isFinished).length;
+  }
+
+  function toggleTaskCompletion(taskContent: string) {
+  // Aqui, estamos recebendo o conteúdo da tarefa que queremos marcar como concluída ou não.
+  setTasks((prevTasks) =>
+    // Usamos o `setTasks` para atualizar o estado `tasks` do componente `App`.
+
+    prevTasks.map((task) =>
+      // Aqui, usamos a função `map` para percorrer todas as tarefas no estado anterior.
+
+      task.content === taskContent
+        ? { ...task, isFinished: !task.isFinished }
+        // Se a tarefa atual tiver o mesmo conteúdo da tarefa que queremos marcar,
+        // então criamos uma nova tarefa com todas as propriedades da tarefa atual,
+        // mas invertemos o valor de `isFinished` usando `!task.isFinished`.
+        // Isso marca a tarefa como concluída se não estiver concluída e vice-versa.
+
+        : task
+        // Se a tarefa atual não for a tarefa que estamos procurando, ela permanece inalterada.
+    )
+  );
+}
   
   return (
     <div className={style.page}>
@@ -59,12 +88,12 @@ function App() {
           <header >
             <div>
                 <span className={style.taskCount} >Tarefas Criadas </span>
-                <span>0</span>
+                <span>{tasks.map( task => task).length}</span>
             </div>
               
             <div>
                 <span className={style.taskFinished}>Concluidas </span>
-                <span>0</span>
+                <span>{countCompletedTasks()}</span>
             </div>
           </header>
 
@@ -72,8 +101,11 @@ function App() {
             {tasks.map(task => {
               return  <Task
                 onDeleteTask={deleteComment}
-                key={task}
-                content={task} />
+                key={task.content}
+                content={task.content} 
+                isFinished={task.isFinished}
+                toggleTaskCompletion={toggleTaskCompletion}
+                />
             })}
             
           </div>
